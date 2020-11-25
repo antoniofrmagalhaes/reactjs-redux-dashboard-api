@@ -23,7 +23,7 @@ class SendForgotPasswordEmailService {
     private userTokensRepository: IUserTokensRepository
   ) {}
 
-  public async execute({ email }: RecoveryPasswordRequest): Promise<void> {
+  public async execute({ email }: RecoveryPasswordRequest): Promise<string> {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
@@ -39,8 +39,9 @@ class SendForgotPasswordEmailService {
     await this.usersRepository.updateRecoveryToken(_id, recoveryToken)
     await this.mailProvider.sendMail(
       email,
-      `http://localhost:3000/password/reset/${recoveryToken}`
+      `https://reactjs-redux-dashboard.vercel.app/password/reset/${recoveryToken}`
     )
+    return `https://reactjs-redux-dashboard.vercel.app/password/reset/${recoveryToken}`
   }
 }
 

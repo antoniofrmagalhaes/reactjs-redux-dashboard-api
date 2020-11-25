@@ -13,9 +13,9 @@ class SessionsController {
       SendForgotPasswordEmailService
     )
 
-    await sendForgotPasswordEmail.execute(request.body)
+    const link = await sendForgotPasswordEmail.execute(request.body)
 
-    return response.json()
+    return response.json(link)
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
